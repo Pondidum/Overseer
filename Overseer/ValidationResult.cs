@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
-
 namespace Overseer
 {
 	public class ValidationResult
 	{
-		public IEnumerable<string> Messages { get; set; }
-		public ValidationStatus Status { get; set; }
+		public string Message { get; private set; }
+		public Status Status { get; private set; }
+
+		public ValidationResult(Status status, string message)
+		{
+			Status = status;
+			Message = message;
+		}
 	}
 }
