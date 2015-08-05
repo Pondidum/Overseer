@@ -6,6 +6,7 @@ namespace Overseer
 	{
 		public IDictionary<string, object> Headers { get; set; }
 		public string Body { get; set; }
+		public string Type { get; set; }
 
 		public Message()
 		{

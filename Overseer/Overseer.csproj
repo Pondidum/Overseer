@@ -43,6 +43,8 @@
     <Compile Include="IMessageConverter.cs" />
     <Compile Include="IMessageReader.cs" />
     <Compile Include="IValidationOutput.cs" />
+    <Compile Include="IValidator.cs" />
+    <Compile Include="IValidatorSource.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageValidator.cs" />
     <Compile Include="MonitorQueue.cs" />
