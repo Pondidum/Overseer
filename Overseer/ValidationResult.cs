@@ -13,7 +13,8 @@ namespace Overseer
 			_results = results.ToList();
 		}
 
-		public string Message { get {  return _results.Aggregate("", (a, r) => a + Environment.NewLine + r.Message); } }
+		public IEnumerable<ValidationResult> Results { get { return _results; } }
+		public string Message { get { return _results.Aggregate("", (a, r) => a + Environment.NewLine + r.Message); } }
 		public Status Status { get { return _results.Max(r => r.Status); } }
 	}
 }
