@@ -16,9 +16,10 @@ namespace Overseer
 			var validators = _source.For(message.Type);
 
 			var results = validators
-				.Select(v => v.Validate(message));
+				.Select(v => v.Validate(message))
+				.ToList();
 
-			return new ValidationResult(results);
+			return new ValidationResultNode(results);
 		}
 	}
 }

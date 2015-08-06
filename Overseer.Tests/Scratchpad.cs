@@ -1,6 +1,4 @@
-﻿using NSubstitute;
-using Overseer.RabbitMQ;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 
 namespace Overseer.Tests
