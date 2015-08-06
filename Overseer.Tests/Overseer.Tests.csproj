@@ -62,10 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\TestObject.cs" />
     <Compile Include="Scratchpad.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\spec.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Overseer.RabbitMQ\Overseer.RabbitMQ.csproj">
