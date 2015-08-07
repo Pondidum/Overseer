@@ -17,7 +17,7 @@ namespace Overseer.Tests.Validators
 			using (var stream = GetType().Assembly.GetManifestResourceStream("Overseer.Tests.Resources.spec.json"))
 			using (var reader = new StreamReader(stream))
 			{
-				_validator = new JsonSchemaValidator(reader.ReadToEnd());
+				_validator = JsonConvert.DeserializeObject<JsonSchemaValidator>(reader.ReadToEnd());
 			}
 		}
 

@@ -7,20 +7,12 @@ namespace Overseer.Validators
 {
 	public class JsonSchemaValidator : IValidator
 	{
-		public JSchema BodySchema { get; private set; }
-		public string MessageType { get; private set; }
-
-		public JsonSchemaValidator(string json)
-		{
-			var obj = JObject.Parse(json);
-
-			BodySchema = JSchema.Load(obj["body"].CreateReader());
-			MessageType = obj["type"].Value<string>();
-		}
+		public JSchema Body { get; set; }
+		public string Type { get; set; }
 
 		public ValidationResult Validate(Message message)
 		{
-			if (string.Equals(message.Type, MessageType, StringComparison.OrdinalIgnoreCase) == false)
+			if (string.Equals(message.Type, Type, StringComparison.OrdinalIgnoreCase) == false)
 			{
 				return new ValidationResultLeaf(Status.NotInterested, string.Empty);
 			}
@@ -31,7 +23,7 @@ namespace Overseer.Validators
 
 				IList<string> messages;
 
-				var status = obj.IsValid(BodySchema, out messages)
+				var status = obj.IsValid(Body, out messages)
 					? Status.Pass
 					: Status.Fail;
 
@@ -41,7 +33,6 @@ namespace Overseer.Validators
 			{
 				return new ValidationResultLeaf(Status.Fail, ex.Message);
 			}
-
 		}
 	}
 }
