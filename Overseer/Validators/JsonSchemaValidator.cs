@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 
@@ -7,6 +8,7 @@ namespace Overseer.Validators
 {
 	public class JsonSchemaValidator : IValidator
 	{
+		public JSchema Header { get; set; }
 		public JSchema Body { get; set; }
 		public string Type { get; set; }
 
@@ -17,17 +19,22 @@ namespace Overseer.Validators
 				return new ValidationResultLeaf(Status.NotInterested, string.Empty);
 			}
 
+
 			try
 			{
 				var obj = JObject.Parse(message.Body);
 
-				IList<string> messages;
+				IList<string> bodyMessages;
+				IList<string> headerMessages;
 
-				var status = obj.IsValid(Body, out messages)
+				var bodyStatus = obj.IsValid(Body, out bodyMessages);
+				var headerStatus = JObject.FromObject(message.Headers).IsValid(Header, out headerMessages);
+
+				var status = bodyStatus && headerStatus
 					? Status.Pass
 					: Status.Fail;
 
-				return new ValidationResultLeaf(status, string.Join(Environment.NewLine, messages));
+				return new ValidationResultLeaf(status, string.Join(Environment.NewLine, headerMessages.Concat(bodyMessages)));
 			}
 			catch (Exception ex)
 			{

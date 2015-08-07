@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Overseer.Tests.Resources;
@@ -54,12 +55,17 @@ namespace Overseer.Tests.Validators
 		{
 			var body = JsonConvert.SerializeObject(new PersonExactMatch
 			{
-				ID = Guid.NewGuid(), 
-				Name = "Testing Person", 
-				Addresses = new[] { new Address { Line1 = "150", PostCode = "RG1 5JN"}, }
+				ID = Guid.NewGuid(),
+				Name = "Testing Person",
+				Addresses = new[] { new Address { Line1 = "150", PostCode = "RG1 5JN" }, }
 			});
-			
-			var result = _validator.Validate(new Message { Type = "PersonExactMatch", Body = body });
+
+			var headers = new Dictionary<string, object>
+			{
+				{ "CorrelationId", "some-id"}
+			};
+
+			var result = _validator.Validate(new Message { Type = "PersonExactMatch", Body = body, Headers = headers});
 
 			result.Message.ShouldBeEmpty();
 			result.Status.ShouldBe(Status.Pass);

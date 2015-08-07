@@ -1,5 +1,13 @@
 {
     "type": "PersonExactMatch",
+    "header": { 
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "CorrelationId": { "type": "string" }
+        },
+        "required": [ "CorrelationId" ]
+    },
     "body": {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "nope",
