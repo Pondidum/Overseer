@@ -59,8 +59,9 @@ namespace Overseer.Tests.Sources
 
 			File.WriteAllText(Path.Combine(_directory, "Testing.json"), contents);
 
-			_source.For("Testing").First().ShouldBeOfType<JsonSchemaValidator>();
-			_source.For("Testing").Last().ShouldBeOfType<JsonSchemaValidator>();
+			var validators = _source.For("Testing").ToList();
+			validators[0].ShouldBeOfType<JsonSchemaValidator>();
+			validators[1].ShouldBeOfType<JsonSchemaValidator>();
 		}
 
 		private string GetSpecJson()
