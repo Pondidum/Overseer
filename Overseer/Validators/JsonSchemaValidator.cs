@@ -19,7 +19,6 @@ namespace Overseer.Validators
 				return new ValidationResultLeaf(Status.NotInterested, string.Empty);
 			}
 
-
 			try
 			{
 				var obj = JObject.Parse(message.Body);
