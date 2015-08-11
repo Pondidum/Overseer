@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Overseer
 {
@@ -6,6 +7,7 @@ namespace Overseer
 	{
 		protected ValidationResult()
 		{
+			Results = Enumerable.Empty<ValidationResult>();
 		}
 
 		public IEnumerable<ValidationResult> Results { get; protected set; }
