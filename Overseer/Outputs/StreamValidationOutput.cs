@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Overseer.Outputs
 {
-	public class StreamWriterValidationOutput : IValidationOutput
+	public class StreamValidationOutput : IValidationOutput
 	{
 		private readonly StreamWriter _writer;
 
-		public StreamWriterValidationOutput(Stream stream)
+		public StreamValidationOutput(Stream stream)
 		{
 			_writer = new StreamWriter(stream);
 			_writer.AutoFlush = true;

@@ -65,7 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Outputs\StreamWriterValidationOutputTests.cs" />
+    <Compile Include="Outputs\StreamValidationOutputTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Address.cs" />
     <Compile Include="Resources\PersonExactMatch.cs" />

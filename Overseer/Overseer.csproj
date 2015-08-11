@@ -58,7 +58,7 @@
     <Compile Include="MessageValidator.cs" />
     <Compile Include="MonitorQueue.cs" />
     <Compile Include="Outputs\InMemoryValidationOutput.cs" />
-    <Compile Include="Outputs\StreamWriterValidationOutput.cs" />
+    <Compile Include="Outputs\StreamValidationOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\CachingValidatorSource.cs" />
     <Compile Include="Sources\FileValidatorSource.cs" />

@@ -7,15 +7,15 @@ using Xunit;
 
 namespace Overseer.Tests.Outputs
 {
-	public class StreamWriterValidationOutputTests
+	public class StreamValidationOutputTests
 	{
 		private readonly MemoryStream _stream;
-		private readonly StreamWriterValidationOutput _output;
+		private readonly StreamValidationOutput _output;
 
-		public StreamWriterValidationOutputTests()
+		public StreamValidationOutputTests()
 		{
 			_stream = new MemoryStream();
-			_output = new StreamWriterValidationOutput(_stream);
+			_output = new StreamValidationOutput(_stream);
 		}
 
 		private string GetText()
