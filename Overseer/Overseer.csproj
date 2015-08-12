@@ -60,6 +60,7 @@
     <Compile Include="Outputs\InMemoryValidationOutput.cs" />
     <Compile Include="Outputs\StreamValidationOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Readers\InMemoryMessageReader.cs" />
     <Compile Include="Sources\CachingValidatorSource.cs" />
     <Compile Include="Sources\FileValidatorSource.cs" />
     <Compile Include="Status.cs" />
