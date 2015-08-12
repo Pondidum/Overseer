@@ -13,7 +13,12 @@ namespace Overseer
 
 		public ValidationResult Validate(Message message)
 		{
-			var validators = _source.For(message.Type);
+			var validators = _source.For(message.Type).ToList();
+
+			if (validators.Any() == false)
+			{
+				return new ValidationResultLeaf(Status.Warning, string.Format("No validators for {0} have been registered.", message.Type));
+			}
 
 			var results = validators
 				.Select(v => v.Validate(message))

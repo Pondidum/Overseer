@@ -37,5 +37,17 @@ namespace Overseer.Tests.Acceptance
 			_output.Results.Single().Status.ShouldBe(Status.Warning);
 			_output.Results.Single().Message.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
 		}
+
+		[Fact]
+		public void When_reading_a_message_with_no_validator()
+		{
+			_messages.Push(new Message
+			{
+				Type = "NonValidatingMessage",
+			});
+
+			_output.Results.Single().Status.ShouldBe(Status.Warning);
+			_output.Results.Single().Message.ShouldBe("No validators for NonValidatingMessage have been registered.");
+		}
 	}
 }
