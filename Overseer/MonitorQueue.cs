@@ -28,9 +28,22 @@
 		private void OnMessage(object input)
 		{
 			var message = _converter.Convert(input);
-			var result = _validator.Validate(message);
+
+			var result = message != null
+				? _validator.Validate(message) 
+				: BadMessageResult(input);
 
 			_output.Write(result);
+		}
+
+		private ValidationResultLeaf BadMessageResult(object input)
+		{
+			var message = string.Format(
+				"Unable to convert message of type {0} using {1}.",
+				input.GetType().Name,
+				_converter.GetType().Name);
+
+			return new ValidationResultLeaf(Status.Warning, message);
 		}
 	}
 }
