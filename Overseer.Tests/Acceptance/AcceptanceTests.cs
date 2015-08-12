@@ -11,10 +11,12 @@ using Xunit;
 
 namespace Overseer.Tests.Acceptance
 {
-	public class AcceptanceTests
+	public class AcceptanceTests : IDisposable
 	{
 		private readonly InMemoryMessageReader _messages;
 		private readonly InMemoryValidationOutput _output;
+		private readonly MonitorQueue _queueMonitor;
+		private readonly IValidatorSource _validators;
 
 		public AcceptanceTests()
 		{
@@ -22,11 +24,11 @@ namespace Overseer.Tests.Acceptance
 			_output = new InMemoryValidationOutput();
 
 			var converter = new DirectMessageConverter();
-			var source = Substitute.For<IValidatorSource>();
-			var validator = new MessageValidator(source);
+			_validators = Substitute.For<IValidatorSource>();
+			var validator = new MessageValidator(_validators);
 
-			var queueMonitor = new MonitorQueue(_messages, converter, validator, _output);
-			queueMonitor.Start();
+			_queueMonitor = new MonitorQueue(_messages, converter, validator, _output);
+			_queueMonitor.Start();
 		}
 
 		[Fact]
@@ -48,6 +50,29 @@ namespace Overseer.Tests.Acceptance
 
 			_output.Results.Single().Status.ShouldBe(Status.Warning);
 			_output.Results.Single().Message.ShouldBe("No validators for NonValidatingMessage have been registered.");
+		}
+
+		[Fact]
+		public void When_reading_a_message_which_is_not_valid()
+		{
+			var message = new Message
+			{
+				Type = "ValidatableMessage"
+			};
+
+			var validator = Substitute.For<IValidator>();
+			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Fail, "No."));
+			_validators.For(message.Type).Returns(new[] { validator });
+
+			_messages.Push(message);
+
+			_output.Results.Single().Status.ShouldBe(Status.Fail);
+			_output.Results.Single().Message.ShouldBe("\r\nNo.");
+		}
+
+		public void Dispose()
+		{
+			_queueMonitor.Stop();
 		}
 	}
 }
