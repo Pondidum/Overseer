@@ -67,7 +67,25 @@ namespace Overseer.Tests.Acceptance
 			_messages.Push(message);
 
 			_output.Results.Single().Status.ShouldBe(Status.Fail);
-			_output.Results.Single().Message.ShouldBe("\r\nNo.");
+			_output.Results.Single().Results.Single().Message.ShouldBe("No.");
+		}
+
+		[Fact]
+		public void When_reading_a_message_which_is_valid()
+		{
+			var message = new Message
+			{
+				Type = "ValidatableMessage"
+			};
+
+			var validator = Substitute.For<IValidator>();
+			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Pass,string.Empty));
+			_validators.For(message.Type).Returns(new[] { validator });
+
+			_messages.Push(message);
+
+			_output.Results.Single().Status.ShouldBe(Status.Pass);
+			_output.Results.Single().Message.ShouldBe("");
 		}
 
 		public void Dispose()
