@@ -10,7 +10,7 @@ namespace Overseer
 		public ValidationResultNode(List<ValidationResult> results)
 		{
 			Results = results;
-			Status = results.Max(r => r.Status);
+			Status = results.Select(r => r.Status).DefaultIfEmpty().Max();
 			Message = results.Aggregate("", (a, r) => a + Environment.NewLine + r.Message);
 		}
 	}
