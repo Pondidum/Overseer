@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\DirectMessageConverter.cs" />
     <Compile Include="IMessageConverter.cs" />
     <Compile Include="IMessageReader.cs" />
     <Compile Include="IValidationOutput.cs" />

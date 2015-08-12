@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NSubstitute;
+using Overseer.Converters;
 using Overseer.Outputs;
 using Overseer.RabbitMQ;
 using Overseer.Readers;
@@ -20,7 +21,7 @@ namespace Overseer.Tests.Acceptance
 			_messages = new InMemoryMessageReader();
 			_output = new InMemoryValidationOutput();
 
-			var converter = Substitute.For<IMessageConverter>();
+			var converter = new DirectMessageConverter();
 			var source = Substitute.For<IValidatorSource>();
 			var validator = new MessageValidator(source);
 
@@ -34,7 +35,7 @@ namespace Overseer.Tests.Acceptance
 			_messages.Push("Testing");
 
 			_output.Results.Single().Status.ShouldBe(Status.Warning);
-			_output.Results.Single().Message.ShouldBe("Unable to convert message of type String using IMessageConverterProxy.");
+			_output.Results.Single().Message.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
 		}
 	}
 }
