@@ -65,6 +65,7 @@
     <Compile Include="Readers\InMemoryMessageReader.cs" />
     <Compile Include="Sources\CachingValidatorSource.cs" />
     <Compile Include="Sources\FileValidatorSource.cs" />
+    <Compile Include="Sources\InMemoryValidationSource.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="ValidationResultLeaf.cs" />

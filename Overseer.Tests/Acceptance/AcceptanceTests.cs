@@ -5,6 +5,7 @@ using Overseer.Converters;
 using Overseer.Outputs;
 using Overseer.RabbitMQ;
 using Overseer.Readers;
+using Overseer.Sources;
 using Overseer.Validators;
 using Shouldly;
 using Xunit;
@@ -14,17 +15,17 @@ namespace Overseer.Tests.Acceptance
 	public class AcceptanceTests : IDisposable
 	{
 		private readonly InMemoryMessageReader _messages;
+		private readonly InMemoryValidationSource _validators;
 		private readonly InMemoryValidationOutput _output;
 		private readonly MonitorQueue _queueMonitor;
-		private readonly IValidatorSource _validators;
 
 		public AcceptanceTests()
 		{
 			_messages = new InMemoryMessageReader();
 			_output = new InMemoryValidationOutput();
+			_validators = new InMemoryValidationSource();
 
 			var converter = new DirectMessageConverter();
-			_validators = Substitute.For<IValidatorSource>();
 			var validator = new MessageValidator(_validators);
 
 			_queueMonitor = new MonitorQueue(_messages, converter, validator, _output);
@@ -62,7 +63,7 @@ namespace Overseer.Tests.Acceptance
 
 			var validator = Substitute.For<IValidator>();
 			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Fail, "No."));
-			_validators.For(message.Type).Returns(new[] { validator });
+			_validators.Register(message.Type, validator);
 
 			_messages.Push(message);
 
@@ -80,7 +81,7 @@ namespace Overseer.Tests.Acceptance
 
 			var validator = Substitute.For<IValidator>();
 			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Pass,string.Empty));
-			_validators.For(message.Type).Returns(new[] { validator });
+			_validators.Register(message.Type, validator);
 
 			_messages.Push(message);
 
