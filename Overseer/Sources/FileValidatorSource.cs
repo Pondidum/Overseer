@@ -9,17 +9,23 @@ namespace Overseer.Sources
 {
 	public class FileValidatorSource : IValidatorSource
 	{
-		private readonly string _baseDirectory;
+		public const string MessageTypeReplacementTag = "{messageType}";
 
-		public FileValidatorSource(string baseDirectory)
+		private readonly string _filePattern;
+
+		public FileValidatorSource(string filePattern)
 		{
-			_baseDirectory = baseDirectory;
+			_filePattern = filePattern;
+		}
+
+		private string GetFilename(string messageType)
+		{
+			return _filePattern.Replace(MessageTypeReplacementTag, messageType);
 		}
 
 		public IEnumerable<IValidator> For(string messageType)
 		{
-			var filename = messageType + ".json";
-			var path = Path.Combine(_baseDirectory, filename);
+			var path = Path.Combine(_filePattern, GetFilename(messageType));
 
 			try
 			{

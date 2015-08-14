@@ -17,9 +17,10 @@ namespace Overseer.Tests.Sources
 		public FileValidatorSourceTests()
 		{
 			_directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+			var pattern = Path.Combine(_directory, FileValidatorSource.MessageTypeReplacementTag + ".json");
 
 			Directory.CreateDirectory(_directory);
-			_source = new FileValidatorSource(_directory);
+			_source = new FileValidatorSource(pattern);
 		}
 
 		[Fact]
