@@ -79,6 +79,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\spec.json" />
+    <EmbeddedResource Include="Resources\multispec.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Overseer.RabbitMQ\Overseer.RabbitMQ.csproj">

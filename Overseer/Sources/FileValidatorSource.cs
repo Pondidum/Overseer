@@ -29,12 +29,15 @@ namespace Overseer.Sources
 					var json = reader.ReadToEnd();
 					var token = JToken.Parse(json);
 
-					return token.Type == JTokenType.Array 
+					var validators = token.Type == JTokenType.Array 
 						? token.ToObject<IEnumerable<JsonSchemaValidator>>() 
 						: new[] { token.ToObject<JsonSchemaValidator>() };
+
+					return validators
+						.Where(v => string.Equals(v.Type, messageType));
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return Enumerable.Empty<IValidator>();
 				//throw;

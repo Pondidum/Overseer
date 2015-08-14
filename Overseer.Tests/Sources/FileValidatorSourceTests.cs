@@ -38,17 +38,17 @@ namespace Overseer.Tests.Sources
 		[Fact]
 		public void When_the_file_exists_but_is_empty()
 		{
-			File.Create(Path.Combine(_directory, "testObject.json"));
+			File.Create(Path.Combine(_directory, "PersonExactMatch.json"));
 
-			_source.For("TestObject").ShouldBeEmpty();
+			_source.For("PersonExactMatch").ShouldBeEmpty();
 		}
 
 		[Fact]
 		public void When_the_file_exists_and_contains_a_single_spec()
 		{
-			File.WriteAllText(Path.Combine(_directory, "Testing.json"), GetSpecJson());
+			File.WriteAllText(Path.Combine(_directory, "PersonExactMatch.json"), GetSpecJson());
 
-			_source.For("Testing").Single().ShouldBeOfType<JsonSchemaValidator>();
+			_source.For("PersonExactMatch").Single().ShouldBeOfType<JsonSchemaValidator>();
 		}
 
 		[Fact]
@@ -57,16 +57,34 @@ namespace Overseer.Tests.Sources
 			var spec = GetSpecJson();
 			var contents = string.Format("[{0}, {1}]", spec, spec);
 
-			File.WriteAllText(Path.Combine(_directory, "Testing.json"), contents);
+			File.WriteAllText(Path.Combine(_directory, "PersonExactMatch.json"), contents);
 
-			var validators = _source.For("Testing").ToList();
+			var validators = _source.For("PersonExactMatch").ToList();
 			validators[0].ShouldBeOfType<JsonSchemaValidator>();
 			validators[1].ShouldBeOfType<JsonSchemaValidator>();
+		}
+
+		[Fact]
+		public void When_the_file_contains_specs_for_different_messages()
+		{
+			File.WriteAllText(Path.Combine(_directory, "PersonOtherMatch.json"), GetMultiSpecJson());
+
+			var validators = _source.For("PersonOtherMatch").ToList();
+			validators.Single().ShouldBeOfType<JsonSchemaValidator>();
 		}
 
 		private string GetSpecJson()
 		{
 			using (var stream = GetType().Assembly.GetManifestResourceStream("Overseer.Tests.Resources.spec.json"))
+			using (var reader = new StreamReader(stream))
+			{
+				return reader.ReadToEnd();
+			}
+		}
+		
+		private string GetMultiSpecJson()
+		{
+			using (var stream = GetType().Assembly.GetManifestResourceStream("Overseer.Tests.Resources.multispec.json"))
 			using (var reader = new StreamReader(stream))
 			{
 				return reader.ReadToEnd();
