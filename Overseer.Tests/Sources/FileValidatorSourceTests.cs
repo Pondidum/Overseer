@@ -76,7 +76,7 @@ namespace Overseer.Tests.Sources
 
 		private string GetSpecJson()
 		{
-			using (var stream = GetType().Assembly.GetManifestResourceStream("Overseer.Tests.Resources.spec.json"))
+			using (var stream = GetType().Assembly.GetManifestResourceStream("Overseer.Tests.Resources.PersonExactMatch.json"))
 			using (var reader = new StreamReader(stream))
 			{
 				return reader.ReadToEnd();

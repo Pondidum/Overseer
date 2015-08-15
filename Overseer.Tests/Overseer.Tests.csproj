@@ -78,7 +78,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\spec.json" />
+    <EmbeddedResource Include="Resources\PersonExactMatch.json" />
     <EmbeddedResource Include="Resources\multispec.json" />
   </ItemGroup>
   <ItemGroup>
