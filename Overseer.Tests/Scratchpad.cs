@@ -15,7 +15,6 @@ namespace Overseer.Tests
 		[Fact]
 		public void When_testing_something()
 		{
-
 		}
 	}
 }
