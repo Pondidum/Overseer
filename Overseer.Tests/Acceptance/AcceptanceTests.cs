@@ -3,7 +3,6 @@ using System.Linq;
 using NSubstitute;
 using Overseer.Converters;
 using Overseer.Outputs;
-using Overseer.RabbitMQ;
 using Overseer.Readers;
 using Overseer.Sources;
 using Overseer.Validators;

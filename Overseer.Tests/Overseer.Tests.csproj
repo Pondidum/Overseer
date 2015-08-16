@@ -108,10 +108,6 @@
     <EmbeddedResource Include="Resources\multispec.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Overseer.RabbitMQ\Overseer.RabbitMQ.csproj">
-      <Project>{7cb32050-0141-49d3-863c-1df5e5d6409d}</Project>
-      <Name>Overseer.RabbitMQ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Overseer\Overseer.csproj">
       <Project>{8bc0c472-1d89-40db-bd4c-c951cb1e3524}</Project>
       <Name>Overseer</Name>
