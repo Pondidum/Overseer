@@ -16,7 +16,7 @@ namespace Overseer.Tests.Acceptance
 		private readonly InMemoryMessageReader _messages;
 		private readonly InMemoryValidationSource _validators;
 		private readonly InMemoryValidationOutput _output;
-		private readonly MonitorQueue _queueMonitor;
+		private readonly QueueMonitor _queueMonitor;
 
 		public AcceptanceTests()
 		{
@@ -27,7 +27,7 @@ namespace Overseer.Tests.Acceptance
 			var converter = new DirectMessageConverter();
 			var validator = new MessageValidator(_validators);
 
-			_queueMonitor = new MonitorQueue(_messages, converter, validator, _output);
+			_queueMonitor = new QueueMonitor(_messages, converter, validator, _output);
 			_queueMonitor.Start();
 		}
 

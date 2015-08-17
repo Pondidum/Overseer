@@ -1,13 +1,13 @@
 ﻿namespace Overseer
 {
-	public class MonitorQueue
+	public class QueueMonitor
 	{
 		private readonly IMessageReader _reader;
 		private readonly IMessageConverter _converter;
 		private readonly MessageValidator _validator;
 		private readonly IValidationOutput _output;
 
-		public MonitorQueue(IMessageReader reader, IMessageConverter converter, MessageValidator validator, IValidationOutput output)
+		public QueueMonitor(IMessageReader reader, IMessageConverter converter, MessageValidator validator, IValidationOutput output)
 		{
 			_reader = reader;
 			_converter = converter;
