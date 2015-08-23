@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using Overseer.Validators;
 
 namespace Overseer.Sources
@@ -29,18 +28,11 @@ namespace Overseer.Sources
 
 			try
 			{
-				using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-				using (var reader = new StreamReader(fs))
+				using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					var json = reader.ReadToEnd();
-					var token = JToken.Parse(json);
-
-					var validators = token.Type == JTokenType.Array 
-						? token.ToObject<IEnumerable<JsonSchemaValidator>>() 
-						: new[] { token.ToObject<JsonSchemaValidator>() };
-
-					return validators
-						.Where(v => string.Equals(v.Type, messageType));
+					return JsonSchemaReader
+						.FromJsonStream(stream)
+						.Where(v => string.Equals(v.Type, messageType)); ;
 				}
 			}
 			catch (Exception)

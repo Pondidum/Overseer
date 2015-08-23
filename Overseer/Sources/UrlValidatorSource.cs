@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using Overseer.Validators;
 
 namespace Overseer.Sources
@@ -28,15 +27,11 @@ namespace Overseer.Sources
 					return Enumerable.Empty<IValidator>();
 				}
 
-				var json = response.Content.ReadAsStringAsync().Result;
-				var token = JToken.Parse(json);
+				var stream = response.Content.ReadAsStreamAsync().Result;
 
-				var validators = token.Type == JTokenType.Array
-					? token.ToObject<IEnumerable<JsonSchemaValidator>>()
-					: new[] { token.ToObject<JsonSchemaValidator>() };
-
-				return validators
-					.Where(v => string.Equals(v.Type, messageType));
+				return JsonSchemaReader
+					.FromJsonStream(stream)
+						.Where(v => string.Equals(v.Type, messageType)); ;
 			}
 		}
 	}

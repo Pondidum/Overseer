@@ -73,6 +73,7 @@
     <Compile Include="ValidationResult.cs" />
     <Compile Include="ValidationResultLeaf.cs" />
     <Compile Include="ValidationResultNode.cs" />
+    <Compile Include="Validators\JsonSchemaReader.cs" />
     <Compile Include="Validators\JsonSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>

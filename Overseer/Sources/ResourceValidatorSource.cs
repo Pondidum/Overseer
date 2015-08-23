@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json.Linq;
 using Overseer.Validators;
 
 namespace Overseer.Sources
@@ -33,17 +31,10 @@ namespace Overseer.Sources
 			try
 			{
 				using (var stream = _assembly.GetManifestResourceStream(fullname))
-				using (var reader = new StreamReader(stream))
 				{
-					var json = reader.ReadToEnd();
-					var token = JToken.Parse(json);
-
-					var validators = token.Type == JTokenType.Array
-						? token.ToObject<IEnumerable<JsonSchemaValidator>>()
-						: new[] { token.ToObject<JsonSchemaValidator>() };
-
-					return validators
-						.Where(v => string.Equals(v.Type, messageType));
+					return JsonSchemaReader
+						.FromJsonStream(stream)
+						.Where(v => string.Equals(v.Type, messageType)); ;
 				}
 			}
 			catch (Exception)
