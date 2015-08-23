@@ -6,6 +6,9 @@
 		},
 		{
 			"path": "..\\Overseer.RabbitMQ"
+		},
+		{
+			"path": "..\\Overseer.ServiceConsole"
 		}
 	]
 }
