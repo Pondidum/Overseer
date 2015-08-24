@@ -24,7 +24,7 @@ namespace Overseer.Sources
 
 		public IEnumerable<IValidator> For(string messageType)
 		{
-			var path = Path.Combine(_filePattern, GetFilename(messageType));
+			var path = GetFilename(messageType);
 
 			try
 			{
@@ -38,7 +38,6 @@ namespace Overseer.Sources
 			catch (Exception)
 			{
 				return Enumerable.Empty<IValidator>();
-				//throw;
 			}
 		}
 	}
