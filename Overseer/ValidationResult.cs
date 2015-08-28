@@ -15,7 +15,7 @@ namespace Overseer
 
 			Message = message ?? new Message();
 			Children = children;
-			Status = children.Max(c => c.Status);
+			Status = children.Select(c => c.Status).DefaultIfEmpty(Status.Pass).Max();
 		}
 	}
 

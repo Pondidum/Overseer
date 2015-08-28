@@ -31,13 +31,15 @@ namespace Overseer.Tests.Acceptance
 			_queueMonitor.Start();
 		}
 
+		private ValidationResult Result { get { return _output.Results.Single(); } }
+
 		[Fact]
 		public void When_reading_message_which_cannot_be_converted()
 		{
 			_messages.Push("Testing");
 
-			_output.Results.Single().Status.ShouldBe(Status.Warning);
-			_output.Results.Single().ValidationMessage.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
+			Result.Status.ShouldBe(Status.Warning);
+			Result.Children.Single().ValidationMessage.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
 		}
 
 		[Fact]
@@ -48,8 +50,8 @@ namespace Overseer.Tests.Acceptance
 				Type = "NonValidatingMessage",
 			});
 
-			_output.Results.Single().Status.ShouldBe(Status.Warning);
-			_output.Results.Single().ValidationMessage.ShouldBe("No validators for NonValidatingMessage have been registered.");
+			Result.Status.ShouldBe(Status.Warning);
+			Result.Children.Single().ValidationMessage.ShouldBe("No validators for NonValidatingMessage have been registered.");
 		}
 
 		[Fact]
@@ -61,13 +63,13 @@ namespace Overseer.Tests.Acceptance
 			};
 
 			var validator = Substitute.For<IValidator>();
-			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Fail, "No."));
+			validator.Validate(message).Returns(new ValidationNode(Status.Fail, "No."));
 			_validators.Register(message.Type, validator);
 
 			_messages.Push(message);
 
-			_output.Results.Single().Status.ShouldBe(Status.Fail);
-			_output.Results.Single().Results.Single().ValidationMessage.ShouldBe("No.");
+			Result.Status.ShouldBe(Status.Fail);
+			Result.Children.Single().ValidationMessage.ShouldBe("No.");
 		}
 
 		[Fact]
@@ -79,13 +81,13 @@ namespace Overseer.Tests.Acceptance
 			};
 
 			var validator = Substitute.For<IValidator>();
-			validator.Validate(message).Returns(new ValidationResultLeaf(Status.Pass,string.Empty));
+			validator.Validate(message).Returns(new ValidationNode(Status.Pass, string.Empty));
 			_validators.Register(message.Type, validator);
 
 			_messages.Push(message);
 
-			_output.Results.Single().Status.ShouldBe(Status.Pass);
-			_output.Results.Single().ValidationMessage.ShouldBe("");
+			Result.Status.ShouldBe(Status.Pass);
+			Result.Children.Single().Status.ShouldBe(Status.Pass);
 		}
 
 		public void Dispose()
