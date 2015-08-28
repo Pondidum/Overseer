@@ -47,7 +47,7 @@ namespace Overseer.Tests.Validators
 			var result = _validator.Validate(new Message { Type = "PersonExactMatch", Body = body });
 
 			result.Status.ShouldBe(Status.Fail);
-			result.Message.ShouldNotBeEmpty();
+			result.ValidationMessage.ShouldNotBeEmpty();
 		}
 
 		[Fact]
@@ -67,7 +67,7 @@ namespace Overseer.Tests.Validators
 
 			var result = _validator.Validate(new Message { Type = "PersonExactMatch", Body = body, Headers = headers});
 
-			result.Message.ShouldBeEmpty();
+			result.ValidationMessage.ShouldBeEmpty();
 			result.Status.ShouldBe(Status.Pass);
 		}
 	}

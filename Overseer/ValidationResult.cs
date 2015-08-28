@@ -12,6 +12,6 @@ namespace Overseer
 
 		public IEnumerable<ValidationResult> Results { get; protected set; }
 		public Status Status { get; protected set; }
-		public string Message { get; protected set; }
+		public string ValidationMessage { get; protected set; }
 	}
 }

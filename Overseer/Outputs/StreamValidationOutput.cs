@@ -35,7 +35,7 @@ namespace Overseer.Outputs
 			}
 			else
 			{
-				_writer.Write(result.Message);
+				_writer.Write(result.ValidationMessage);
 			}
 
 			_writer.WriteLine();

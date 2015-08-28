@@ -2,10 +2,10 @@ namespace Overseer
 {
 	public class ValidationResultLeaf : ValidationResult
 	{
-		public ValidationResultLeaf(Status status, string message)
+		public ValidationResultLeaf(Status status, string validationMessage)
 		{
 			Status = status;
-			Message = message;
+			ValidationMessage = validationMessage;
 		}
 	}
 }

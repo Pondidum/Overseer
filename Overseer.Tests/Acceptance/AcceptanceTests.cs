@@ -37,7 +37,7 @@ namespace Overseer.Tests.Acceptance
 			_messages.Push("Testing");
 
 			_output.Results.Single().Status.ShouldBe(Status.Warning);
-			_output.Results.Single().Message.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
+			_output.Results.Single().ValidationMessage.ShouldBe("Unable to convert message of type String using DirectMessageConverter.");
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace Overseer.Tests.Acceptance
 			});
 
 			_output.Results.Single().Status.ShouldBe(Status.Warning);
-			_output.Results.Single().Message.ShouldBe("No validators for NonValidatingMessage have been registered.");
+			_output.Results.Single().ValidationMessage.ShouldBe("No validators for NonValidatingMessage have been registered.");
 		}
 
 		[Fact]
@@ -67,7 +67,7 @@ namespace Overseer.Tests.Acceptance
 			_messages.Push(message);
 
 			_output.Results.Single().Status.ShouldBe(Status.Fail);
-			_output.Results.Single().Results.Single().Message.ShouldBe("No.");
+			_output.Results.Single().Results.Single().ValidationMessage.ShouldBe("No.");
 		}
 
 		[Fact]
@@ -85,7 +85,7 @@ namespace Overseer.Tests.Acceptance
 			_messages.Push(message);
 
 			_output.Results.Single().Status.ShouldBe(Status.Pass);
-			_output.Results.Single().Message.ShouldBe("");
+			_output.Results.Single().ValidationMessage.ShouldBe("");
 		}
 
 		public void Dispose()

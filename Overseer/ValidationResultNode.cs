@@ -10,7 +10,7 @@ namespace Overseer
 		{
 			Results = results;
 			Status = results.Select(r => r.Status).DefaultIfEmpty().Max();
-			Message = string.Empty;
+			ValidationMessage = string.Empty;
 		}
 	}
 }
