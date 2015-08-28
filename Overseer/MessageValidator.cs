@@ -17,14 +17,17 @@ namespace Overseer
 
 			if (validators.Any() == false)
 			{
-				return new ValidationResultLeaf(Status.Warning, string.Format("No validators for {0} have been registered.", message.Type));
+				return new ValidationResult(message, new[]
+				{
+					new ValidationNode(Status.Warning, string.Format("No validators for {0} have been registered.", message.Type))
+				});
 			}
 
 			var results = validators
 				.Select(v => v.Validate(message))
 				.ToList();
 
-			return new ValidationResultNode(results);
+			return new ValidationResult(message, results);
 		}
 	}
 }

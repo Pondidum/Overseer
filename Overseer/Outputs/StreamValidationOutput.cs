@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Overseer.Outputs
 {
@@ -9,36 +9,29 @@ namespace Overseer.Outputs
 
 		public StreamValidationOutput(Stream stream)
 		{
-			_writer = new StreamWriter(stream);
-			_writer.AutoFlush = true;
+			_writer = new StreamWriter(stream)
+			{
+				AutoFlush = true
+			};
 		}
 
 		public void Write(ValidationResult result)
 		{
-			WriteRecursive(result, 0);
+			_writer.WriteLine($"* [{result.Status}] {result.Message.Type}");
+
+			WriteRecursive(result.Children, 1);
 		}
 
-		private void WriteRecursive(ValidationResult result, int depth)
+		private void WriteRecursive(IEnumerable<ValidationNode> nodes, int depth)
 		{
-			_writer.Write(new string(' ', depth * 2));
-			_writer.Write(result.Status);
-			_writer.Write(": ");
-
-			if (result.Results.Any())
+			foreach (var node in nodes)
 			{
-				_writer.WriteLine();
+				var offset = new string(' ', depth * 2);
 
-				foreach (var child in result.Results)
-				{
-					WriteRecursive(child, depth + 1);
-				}
-			}
-			else
-			{
-				_writer.Write(result.ValidationMessage);
-			}
+				_writer.WriteLine($"{offset}* [{node.Status}]: {node.ValidationMessage}");
 
-			_writer.WriteLine();
+				WriteRecursive(node.Children, depth + 1);
+			}
 		}
 	}
 }

@@ -12,11 +12,11 @@ namespace Overseer.Validators
 		public JSchema Body { get; set; }
 		public string Type { get; set; }
 
-		public ValidationResult Validate(Message message)
+		public ValidationNode Validate(Message message)
 		{
 			if (string.Equals(message.Type, Type, StringComparison.OrdinalIgnoreCase) == false)
 			{
-				return new ValidationResultLeaf(Status.NotInterested, string.Empty);
+				return new ValidationNode(Status.NotInterested, string.Empty);
 			}
 
 			try
@@ -33,11 +33,11 @@ namespace Overseer.Validators
 					? Status.Pass
 					: Status.Fail;
 
-				return new ValidationResultLeaf(status, string.Join(Environment.NewLine, headerMessages.Concat(bodyMessages)));
+				return new ValidationNode(status, string.Join(Environment.NewLine, headerMessages.Concat(bodyMessages)));
 			}
 			catch (Exception ex)
 			{
-				return new ValidationResultLeaf(Status.Fail, ex.Message);
+				return new ValidationNode(Status.Fail, ex.Message);
 			}
 		}
 	}

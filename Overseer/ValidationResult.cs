@@ -5,13 +5,36 @@ namespace Overseer
 {
 	public class ValidationResult
 	{
-		protected ValidationResult()
-		{
-			Results = Enumerable.Empty<ValidationResult>();
-		}
+		public Message Message { get; protected set; }
+		public Status Status { get; protected set; }
+		public IEnumerable<ValidationNode> Children { get; protected set; }
 
-		public IEnumerable<ValidationResult> Results { get; protected set; }
+		public ValidationResult(Message message, IEnumerable<ValidationNode> nodes)
+		{
+			var children = nodes.ToList();
+
+			Message = message ?? new Message();
+			Children = children;
+			Status = children.Max(c => c.Status);
+		}
+	}
+
+	public class ValidationNode
+	{
 		public Status Status { get; protected set; }
 		public string ValidationMessage { get; protected set; }
+		public IEnumerable<ValidationNode> Children { get; protected set; }
+
+		public ValidationNode(Status status, string validationMessage)
+			:this(status, validationMessage, Enumerable.Empty<ValidationNode>())
+		{
+		}
+
+		public ValidationNode(Status status, string validationMessage, IEnumerable<ValidationNode> children)
+		{
+			Status = status;
+			ValidationMessage = validationMessage;
+			Children = children;
+		}
 	}
 }

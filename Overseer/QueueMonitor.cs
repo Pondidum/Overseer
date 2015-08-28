@@ -36,14 +36,17 @@
 			_output.Write(result);
 		}
 
-		private ValidationResultLeaf BadMessageResult(object input)
+		private ValidationResult BadMessageResult(object input)
 		{
 			var message = string.Format(
 				"Unable to convert message of type {0} using {1}.",
 				input.GetType().Name,
 				_converter.GetType().Name);
 
-			return new ValidationResultLeaf(Status.Warning, message);
+			return new ValidationResult(null, new []
+			{
+				new ValidationNode(Status.Warning, message) 
+			});
 		}
 	}
 }
