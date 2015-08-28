@@ -70,6 +70,7 @@
     <Compile Include="Sources\InMemoryValidationSource.cs" />
     <Compile Include="Sources\UrlValidatorSource.cs" />
     <Compile Include="Status.cs" />
+    <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="Validators\JsonSchemaReader.cs" />
     <Compile Include="Validators\JsonSchemaValidator.cs" />
