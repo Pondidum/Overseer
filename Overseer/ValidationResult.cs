@@ -26,15 +26,19 @@ namespace Overseer
 		public IEnumerable<ValidationNode> Children { get; protected set; }
 
 		public ValidationNode(Status status, string validationMessage)
-			:this(status, validationMessage, Enumerable.Empty<ValidationNode>())
-		{
-		}
-
-		public ValidationNode(Status status, string validationMessage, IEnumerable<ValidationNode> children)
 		{
 			Status = status;
 			ValidationMessage = validationMessage;
+			Children = Enumerable.Empty<ValidationNode>();
+		}
+
+		public ValidationNode(string validationMessage, IEnumerable<ValidationNode> nodes)
+		{
+			var children = nodes.ToList();
+
+			ValidationMessage = validationMessage;
 			Children = children;
+			Status = children.Select(c => c.Status).DefaultIfEmpty(Status.Pass).Max();
 		}
 	}
 }

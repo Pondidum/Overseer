@@ -52,7 +52,7 @@ namespace Overseer.Tests.Outputs
 		{
 			_output.Write(new ValidationResult(_message, new[]
 			{
-				new ValidationNode(Status.Fail, "For some reason", new []
+				new ValidationNode("For some reason", new []
 				{
 					new ValidationNode(Status.Fail, "Omg!")
 				})
