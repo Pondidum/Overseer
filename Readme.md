@@ -75,5 +75,5 @@ public class Tests : IDisposable
 ### Post Suite
 
 
-[overseer-console]: https://github.com/Pondidum/Overseer.ServiceCore/blob/master/Readme.md
+[overseer-console]: https://github.com/Pondidum/Overseer.ServiceConsole/blob/master/Readme.md
 [runner-xunit]: https://xunit.github.io/
