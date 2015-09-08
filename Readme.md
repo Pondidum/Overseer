@@ -2,6 +2,10 @@
 
 A library to monitor your messages and check they conform to your specifications.  Can be run as part of a test suite, or as a standalone service.
 
+## Notes
+
+This has a dependency on the [Newtonsoft.Json.Schema][newtonsoft-jsonshema] library - which requires a license if you are making over 1000 validations per hour.
+
 ## Usage - Service
 
 See the readme at the [Overseer.ServiceConsole][overseer-console] project page.  This project provides both a windows service and a windows console application.
@@ -77,3 +81,4 @@ public class Tests : IDisposable
 
 [overseer-console]: https://github.com/Pondidum/Overseer.ServiceConsole/blob/master/Readme.md
 [runner-xunit]: https://xunit.github.io/
+[newtonsoft-jsonshema]: http://www.newtonsoft.com/jsonschema
